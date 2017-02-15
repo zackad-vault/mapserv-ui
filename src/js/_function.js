@@ -84,3 +84,11 @@ function loadingEnd() {
 function loadingStart() {
     document.querySelector('.loading').style.display = 'block';
 }
+
+function hideOSM() {
+    osm.setVisible(false);
+}
+
+function showOSM() {
+    osm.setVisible(true);
+}
