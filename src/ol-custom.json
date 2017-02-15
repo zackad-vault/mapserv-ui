@@ -1,21 +1,23 @@
 {
   "exports": [
     "ol.Map",
+    "ol.Map#addLayer",
     "ol.View",
     "ol.control.defaults",
     "ol.layer.Tile",
-    "ol.source.OSM"
+    "ol.layer.Tile#setSource",
+    "ol.layer.Tile#setVisible",
+    "ol.layer.Tile#getSource",
+    "ol.source.OSM",
+    "ol.source.TileWMS",
+    "ol.source.TileWMS#updateParams"
   ],
   "compile": {
     "externs": [
-      "externs/bingmaps.js",
       "externs/closure-compiler.js",
-      "externs/geojson.js",
       "externs/oli.js",
       "externs/olx.js",
-      "externs/proj4js.js",
-      "externs/tilejson.js",
-      "externs/topojson.js"
+      "externs/proj4js.js"
     ],
     "define": [
       "ol.DEBUG=false"
