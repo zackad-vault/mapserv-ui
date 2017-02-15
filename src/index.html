@@ -27,9 +27,9 @@
           | <a href="javascript:void(0);"><i class="fa fa-trash" v-on:click="removeItem(index)" title="Delete Item"></i></a>
           | <a href="javascript:void(0);"><i class="fa fa-list" v-on:click="showList(host)" title="Show Layer List"></i></a>
           | <a href="javascript:void(0);"><i class="fa fa-info-circle" v-on:click="getCapabilities(host.url)" title="Get Capabilities"></i></a>
-          | {{ host.name }} - {{ index }}
+          | {{ host.name }} - {{ index }} <i class="fa fa-eye-slash fa-2x" v-on:click="showOnMap(host)"></i>
           <div class="layer" v-for="(layer, index) in host.layers">
-            <input type="checkbox" v-bind:value="layer.name"> {{ index+1 }} - {{ layer.title }}
+            <input type="checkbox" v-bind:value="layer.name" v-on:click="updateLayer" checked> {{ index+1 }} - {{ layer.title }}
           </div>
         </div>
       </div>

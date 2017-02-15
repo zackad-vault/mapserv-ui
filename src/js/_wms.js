@@ -2,6 +2,20 @@
  * WMS function handlers
  */
 
+function addLayerToMap(wmsUrl, layers) {
+    wmsLayers = new ol.layer.Tile({
+        source: new ol.source.TileWMS({
+            url: wmsUrl,
+            serverType: 'mapserver',
+            params: {
+                LAYERS: layers,
+                TRANSPARENT: true
+            }
+        })
+    });
+    // wmsLayer.push(layer);
+}
+
 function getWMSCapabilities(url, server) {
     loadingStart();
     var capabilitiesRequestUrl = url + '&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities';
@@ -48,4 +62,35 @@ function getLayerList(server) {
     }
     xhr.open('GET', capabilitiesRequestUrl);
     xhr.send();
+}
+
+function showOnMap(server) {
+    getLayerList(server);
+    log(JSON.stringify(server));
+    var layers = updateLayerList();
+    var layer = new ol.source.TileWMS({
+        url: server.url,
+        serverType: 'mapserver',
+        params: {
+            LAYERS: layers,
+            TRANSPARENT: true
+        }
+    });
+    wmsLayer.setSource(layer);
+}
+
+function updateLayerList() {
+    log('click');
+    var paramsLayer = document.querySelectorAll('input:checked');
+    var layers = [];
+    paramsLayer.forEach(function(item, index){
+        layers.push(item.value);
+    });
+    log(layers);
+    return layers;
+}
+
+function updateLayer(){
+    layers = updateLayerList();
+    wmsLayer.getSource().updateParams({LAYERS: layers});
 }

@@ -15,6 +15,7 @@ function addWMSHost() {
     app.input.url = '';
     app.input.name = '';
     localStorage.Server = JSON.stringify(app.server);
+    getLayerList(inputhost);
     log("host added");
 }
 
@@ -29,6 +30,7 @@ function checkExistingHost() {
     var hosts = JSON.parse(localStorage.Server);
     app.server = hosts;
     if (hosts.length > 0) {
+        getLayerList(hosts[0]);
         log('localStorage found.');
     }
 }

@@ -1,10 +1,19 @@
 /*!
  * Openlayers 3 with OpenStreetMap as base map
  */
+
+/**
+ * Open Street Map as base map
+ * @type {ol.layer.Tile}
+ */
 var osm = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
 
+/**
+ * Declare map view object with Geographic Coordinate System (longitude, lattitude)
+ * @type {ol.View}
+ */
 var view = new ol.View({
     maxZoom: 21,
     projection: 'EPSG:4326',
@@ -12,6 +21,10 @@ var view = new ol.View({
     zoom: 10
 });
 
+/**
+ * Instantiate openlayers map
+ * @type {ol.Map}
+ */
 var map = new ol.Map({
     layers: [
         osm
@@ -25,4 +38,9 @@ var map = new ol.Map({
     view: view
 });
 
-var wmsLayers = [];
+/**
+ * Declare wms layer and add it to map
+ * @type {ol.layer.Tile}
+ */
+var wmsLayer = new ol.layer.Tile();
+map.addLayer(wmsLayer);
