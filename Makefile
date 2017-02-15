@@ -30,6 +30,8 @@ copy-assets:
 	@echo "... OK"
 
 compile: clean compile-sass copy-fonts compile-js compile-layout
+	mkdir -p dist/img/
+	cp src/img/favicon.png dist/img/favicon.png
 
 compile-sass:
 	mkdir -p dist/css/
