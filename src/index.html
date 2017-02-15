@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
   <title>Mapserver UI</title>
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
   <link rel="stylesheet" href="css/style.min.css" type="text/css">
   <script data-dev="true" src="js/ol.js" type="text/javascript"></script>
   <script data-dev="true" src="js/vue.js" type="text/javascript"></script>
@@ -12,22 +13,50 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="six columns" id="input">
-        <input type="text" class="u-full-width" placeholder="Enter wms host ..." v-model="wmsHost">
-        <button v-on:click="addWMSHost">add host</button>
-        <button v-on:click="clearLocalStorage">Clear Host List</button>
-      </div>
-      <div class="six columns" id="host">
-        <div class="host" v-for="host in hosts">
-          {{ host.url }} <button v-on:click="deleteServerItem">delete</button>
-          <a href="{{ host.url }}"></a>
-        </div>
-      </div>
       <div class="twelve columns">
         <div id="map_canvas" class="map_canvas"></div>
       </div>
     </div>
   </div>
+  <div class="container" id="app">
+    <div class="row">
+      <div class="six columns" id="host">
+        <div class="host" v-for="(host, index) in server">
+          <hr>
+          <a href="javascript:void(0);"><i class="fa fa-pencil" v-on:click="editItem(index)" title="Edit Item"></i></a>
+          | <a href="javascript:void(0);"><i class="fa fa-trash" v-on:click="removeItem(index)" title="Delete Item"></i></a>
+          | <a href="javascript:void(0);"><i class="fa fa-list" v-on:click="showList(host)" title="Show Layer List"></i></a>
+          | <a href="javascript:void(0);"><i class="fa fa-info-circle" v-on:click="getCapabilities(host.url)" title="Get Capabilities"></i></a>
+          | {{ host.name }} - {{ index }}
+          <div class="layer" v-for="(layer, index) in host.layers">
+            <input type="checkbox" v-bind:value="layer.name"> {{ index+1 }} - {{ layer.title }}
+          </div>
+        </div>
+      </div>
+      <div class="six columns" id="input">
+        <input type="text" class="u-full-width" placeholder="Enter Name e.g Mapserver-1" v-model="input.name">
+        <input type="text" class="u-full-width" placeholder="Enter URL e.g http://example.com/cgi-bin/mapserv?map=example.map" v-model="input.url">
+        <button v-on:click="addWMSHost">add host</button>
+        <button v-on:click="clearLocalStorage">Clear Host List</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns" id="capabilities">
+        <pre>
+          <code class="language-xml">
+            {{ info.detail }}
+          </code>
+        </pre>
+      </div>
+    </div>
+  </div>
+  <div class="loading">
+    <span class="close" onclick="loadingEnd()"><i class="fa fa-close"></i></span>
+    <i class="fa fa-spinner fa-spin fa-5x"></i>
+  </div>
+  <script data-dev="true" src="js/_wms.js" type="text/javascript"></script>
+  <script data-dev="true" src="js/_function.js" type="text/javascript"></script>
+  <script data-dev="true" src="js/_map.js" type="text/javascript"></script>
   <script data-dev="true" src="js/main.js" type="text/javascript"></script>
   <script src="js/main.min.js" type="text/javascript"></script>
 </body>
