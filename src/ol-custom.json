@@ -1,0 +1,29 @@
+{
+  "exports": [
+    "ol.Map",
+    "ol.View",
+    "ol.control.defaults",
+    "ol.layer.Tile",
+    "ol.source.OSM"
+  ],
+  "compile": {
+    "externs": [
+      "externs/bingmaps.js",
+      "externs/closure-compiler.js",
+      "externs/geojson.js",
+      "externs/oli.js",
+      "externs/olx.js",
+      "externs/proj4js.js",
+      "externs/tilejson.js",
+      "externs/topojson.js"
+    ],
+    "define": [
+      "ol.DEBUG=false"
+    ],
+    "extra_annotation_name": [
+      "api", "observable"
+    ],
+    "compilation_level": "ADVANCED",
+    "manage_closure_dependencies": true
+  }
+}
