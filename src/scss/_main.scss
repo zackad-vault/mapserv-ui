@@ -3,6 +3,11 @@ hr{
     margin-top: 10px;
 }
 
+pre code {
+    max-height: calc(100vh - 50px);
+    overflow: scroll;
+}
+
 .map {
     button.osm-layer {
         background: rgba(0, 60, 136, .5);
