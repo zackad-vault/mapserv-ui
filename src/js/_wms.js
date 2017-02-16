@@ -54,6 +54,9 @@ function getLayerList(server) {
             log(layerList);
             app.info.detail = this.responseText;
             loadingEnd();
+            setTimeout(function(){
+                Prism.highlightAll();
+            }, 10);
             return this.response;
         } else {
             loadingEnd();

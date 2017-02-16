@@ -41,6 +41,7 @@ compile-js:
 	mkdir -p dist/js/
 	minify --output dist/js/main.min.js \
 		src/js/ol.js \
+		src/js/prism.js \
 		src/assets/vue/dist/vue.min.js \
 		src/js/_function.js \
 		src/js/_wms.js \
