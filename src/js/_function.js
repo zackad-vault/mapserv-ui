@@ -86,9 +86,13 @@ function loadingStart() {
 }
 
 function hideOSM() {
+    document.querySelector('.osm-layer.hide').style.display = 'none';
+    document.querySelector('.osm-layer.show').style.display = '';
     osm.setVisible(false);
 }
 
 function showOSM() {
+    document.querySelector('.osm-layer.show').style.display = 'none';
+    document.querySelector('.osm-layer.hide').style.display = '';
     osm.setVisible(true);
 }
