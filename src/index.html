@@ -31,7 +31,8 @@
           | <a href="javascript:void(0);"><i class="fa fa-info-circle" v-on:click="getCapabilities(host.url)" title="Get Capabilities"></i></a>
           | {{ host.name }} - {{ index }} <i class="fa fa-eye-slash fa-2x" v-on:click="showOnMap(host)"></i>
           <div class="layer" v-for="(layer, index) in host.layers">
-            <input type="checkbox" v-bind:value="layer.name" v-on:click="updateLayer" checked> {{ index+1 }} - {{ layer.title }}
+            <input type="checkbox" v-bind:value="layer.name" v-on:click="updateLayer" checked>
+            <img class="top" v-bind:src="layer.legendUrl" v-bind:alt="layer.title">
           </div>
         </div>
       </div>
@@ -45,7 +46,7 @@
     <div class="row">
       <div class="twelve columns" id="capabilities">
         <div class="summary">
-          {{ info.summary }}
+          <pre><code class="language-javascript">{{ info.summary }}</code></pre>
         </div>
         <pre>
           <code class="language-markup">{{ info.detail }}</code>
