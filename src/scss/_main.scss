@@ -1,49 +1,58 @@
-hr{
-    margin-bottom: 5px;
-    margin-top: 10px;
+hr {
+  margin-bottom: 5px;
+  margin-top: 10px;
 }
 
 pre code {
-    max-height: calc(100vh - 50px);
-    overflow: scroll;
+  max-height: calc(100vh - 50px);
+  overflow: scroll;
 }
 
 .map {
-    button.osm-layer {
-        background: rgba(0, 60, 136, .5);
-        color: rgba(255, 255, 255, .8);
-        position: absolute;
-        bottom: 10px;
-        left: 10px;
-        margin: 0px;
-        padding: 1px 8px;
-    }
+  button.osm-layer {
+    background: rgba(0, 60, 136, .5);
+    color: rgba(255, 255, 255, .8);
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    margin: 0px;
+    padding: 1px 8px;
+  }
 }
 
-#map_canavas {
-    min-height: 1px;
-    height: 400px;
+#map_canvas {
+  min-height: 1px;
+  height: 400px;
 }
 
 .loading {
-    display: none;
-    text-align: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background: #eee;
-    padding: 10px;
-    border-radius: 10px;
+  display: none;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #eee;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #222;
+  .close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 0px 5px;
+    ;
+    background: #fff;
     border: 1px solid #222;
-    .close {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        padding: 0px 5px;;
-        background: #fff;
-        border: 1px solid #222;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+    border-radius: 5px;
+    cursor: pointer;
+  }
 }
+
+.layer {
+  margin-top: 5px;
+  .top {
+    vertical-align: text-top;
+  }
+}
+
