@@ -47,15 +47,17 @@ function getLayerList(server) {
             layers.forEach(function(item, index){
                 layerList.push({
                     name: item.querySelector('Name').innerHTML,
-                    title: item.querySelector('Title').innerHTML
+                    title: item.querySelector('Title').innerHTML,
+                    legendUrl: item.querySelector('Style LegendURL OnlineResource').getAttribute('xlink:href')
                 });
             });
             server.layers = layerList;
             log(layerList);
             app.info.detail = this.responseText;
+            getSummaryInfo(result);
             loadingEnd();
             setTimeout(function(){
-                Prism.highlightAll();
+                // Prism.highlightAll();
             }, 10);
             return this.response;
         } else {
@@ -65,6 +67,27 @@ function getLayerList(server) {
     }
     xhr.open('GET', capabilitiesRequestUrl);
     xhr.send();
+}
+
+function getSummaryInfo(xml) {
+    var summary = {};
+    var elService = xml.querySelector('Service');
+    var elCapabilities = xml.querySelector('Capability');
+    log(elCapabilities);
+    summary = {
+        service: {
+            name: elService.querySelector('Name').innerHTML,
+            title: elService.querySelector('Title').innerHTML
+        },
+        capabilities: {
+            requests: [
+                elCapabilities.querySelector('Request').children
+            ]
+        }
+    };
+    summary = xmlToJson(xml);
+    app.info.summary = summary;
+    return summary;
 }
 
 function showOnMap(server) {
