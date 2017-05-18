@@ -52,7 +52,6 @@ function getLayerList(server) {
                 });
             });
             server.layers = layerList;
-            log(layerList);
             app.info.detail = this.responseText;
             getSummaryInfo(result);
             loadingEnd();
@@ -73,21 +72,36 @@ function getSummaryInfo(xml) {
     var summary = {};
     var elService = xml.querySelector('Service');
     var elCapabilities = xml.querySelector('Capability');
-    log(elCapabilities);
     summary = {
         service: {
             name: elService.querySelector('Name').innerHTML,
-            title: elService.querySelector('Title').innerHTML
+            title: elService.querySelector('Title').innerHTML,
+            onlineResouce: elService.querySelector('OnlineResource').getAttribute('xlink:href')
         },
         capabilities: {
-            requests: [
-                elCapabilities.querySelector('Request').children
-            ]
+            requests: {
+                getCapabilities: {
+                    format: parseFormat(elCapabilities.querySelectorAll('GetCapabilities Format'))
+                },
+                getMap: {
+                    format: parseFormat(elCapabilities.querySelectorAll('GetMap Format'))
+                },
+                getFeatureInfo: {
+                    format: parseFormat(elCapabilities.querySelectorAll('GetFeatureInfo Format'))
+                }
+            }
         }
     };
-    summary = xmlToJson(xml);
     app.info.summary = summary;
     return summary;
+}
+
+function parseFormat(element) {
+    var result = [];
+    element.forEach(function(item, index) {
+        result.push(item.innerHTML);
+    });
+    return result;
 }
 
 function showOnMap(server) {
