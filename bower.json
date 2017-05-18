@@ -22,7 +22,6 @@
   "dependencies": {
     "vue": "^2.1.10",
     "skeleton": "dhg/skeleton#^2.0.4",
-    "default-thumbnail": "http://xpenology.org/wp-content/themes/qaengine/img/default-thumbnail.jpg",
     "openlayers": "https://github.com/openlayers/openlayers/releases/download/v3.20.1/v3.20.1-dist.zip",
     "font-awesome": "fortawesome/font-awesome#^4.7.0"
   }
