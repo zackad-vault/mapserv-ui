@@ -6,4 +6,4 @@ else
 	echo "zackad/openlayers-compiler image found.";
 fi
 echo "Compiling openlayers library ... "
-docker run --rm --user $(id -u):$(id -g) --volume $(pwd):/build zackad/openlayers-compiler:latest src/ol-custom.json src/js/ol.js
+docker run --rm --user $(id -u):$(id -g) --volume $(pwd):/build zackad/openlayers-compiler:latest src/ol-custom.json src/assets/openlayers/ol.min.js
