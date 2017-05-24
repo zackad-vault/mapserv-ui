@@ -25,8 +25,8 @@
           <hr>
           <a href="javascript:void(0);"><i class="fa fa-pencil" v-on:click="editItem(server)" title="Edit Item"></i></a>
           | <a href="javascript:void(0);"><i class="fa fa-trash" v-on:click="removeItem" title="Delete Item"></i></a>
-          | <a href="javascript:void(0);"><i class="fa fa-list" v-on:click="showList(server)" title="Show Layer List"></i></a>
-          | <a href="javascript:void(0);"><i class="fa fa-info-circle" v-on:click="getCapabilities(server)" title="Get Capabilities"></i></a>
+          | <a href="javascript:void(0);"><i class="fa fa-list" v-on:click="showLayerList(server)" title="Show Layer List"></i></a>
+          | <a href="javascript:void(0);"><i class="fa fa-info-circle" v-on:click="getWMSCapabilities(server)" title="Get Capabilities"></i></a>
           | {{ server.name }}<i class="fa fa-eye-slash fa-2x" v-on:click="showOnMap(server)"></i>
           <div class="layer" v-for="(layer, index) in server.layers">
             <input type="checkbox" v-bind:value="layer.name" v-on:click="updateLayer" checked>

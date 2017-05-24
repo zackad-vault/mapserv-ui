@@ -25,8 +25,8 @@ var app = new Vue({
         exampleHost: exampleHost,
         editItem: editItem,
         removeItem: removeItem,
-        getCapabilities: getWMSCapabilities,
-        showList: getLayerList,
+        getWMSCapabilities: getWMSCapabilities,
+        showLayerList: showLayerList,
         showOnMap: showOnMap,
         updateLayer: updateLayer
     }
