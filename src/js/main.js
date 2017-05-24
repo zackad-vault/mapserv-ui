@@ -22,6 +22,7 @@ var app = new Vue({
     methods: {
         addWMSHost: addWMSHost,
         clearLocalStorage: clearLocalStorage,
+        exampleHost: exampleHost,
         editItem: editItem,
         removeItem: removeItem,
         getCapabilities: getWMSCapabilities,

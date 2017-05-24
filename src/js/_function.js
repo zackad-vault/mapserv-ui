@@ -56,6 +56,11 @@ function editItem(index) {
     app.input.url = app.server[index].url;
 }
 
+function exampleHost() {
+    app.input.name = "Transplar Maps";
+    app.input.url = "https://mapserver.transplar.com/bekasi/";
+}
+
 /**
  * Console log
  * @param  {any} x any object, string, array, number
