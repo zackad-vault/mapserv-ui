@@ -11,7 +11,7 @@ function addWMSHost() {
         name: app.input.name,
         layers: []
     };
-    app.server.push(inputhost);
+    app.server = inputhost;
     app.input.url = '';
     app.input.name = '';
     localStorage.Server = JSON.stringify(app.server);
@@ -25,14 +25,10 @@ function addWMSHost() {
  */
 function checkExistingHost() {
     if (typeof localStorage.Server === 'undefined') {
-        localStorage.setItem('Server', '[]');
+        localStorage.setItem('Server', '{}');
     }
     var hosts = JSON.parse(localStorage.Server);
     app.server = hosts;
-    if (hosts.length > 0) {
-        getLayerList(hosts[0]);
-        log('localStorage found.');
-    }
 }
 
 /*!
@@ -94,6 +90,11 @@ function hideOSM() {
     document.querySelector('.osm-layer.hide').style.display = 'none';
     document.querySelector('.osm-layer.show').style.display = '';
     osm.setVisible(false);
+}
+
+function showLayerList(server) {
+    log('layer list');
+    getLayerList(server);
 }
 
 function showOSM() {

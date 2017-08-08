@@ -20,7 +20,7 @@
   </div>
   <div class="container" id="app">
     <div class="row">
-      <div v-if="server.length>0" class="six columns" id="host">
+      <div v-if="server.layers.length>0" class="six columns" id="host">
         <div class="host">
           <hr>
           <a href="javascript:void(0);"><i class="fa fa-pencil" v-on:click="editItem(server)" title="Edit Item"></i></a>
@@ -28,7 +28,7 @@
           | <a href="javascript:void(0);"><i class="fa fa-list" v-on:click="showLayerList(server)" title="Show Layer List"></i></a>
           | <a href="javascript:void(0);"><i class="fa fa-info-circle" v-on:click="getWMSCapabilities(server)" title="Get Capabilities"></i></a>
           | {{ server.name }}<i class="fa fa-eye-slash fa-2x" v-on:click="showOnMap(server)"></i>
-          <div class="layer" v-for="(layer, index) in server.layers">
+          <div class="layer" v-for="(layer, index) in server[0].layers">
             <input type="checkbox" v-bind:value="layer.name" v-on:click="updateLayer" checked>
             <img class="top" v-bind:src="layer.legendUrl" v-bind:alt="layer.title">
           </div>
