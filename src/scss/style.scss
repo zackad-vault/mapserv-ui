@@ -1,5 +1,8 @@
-@import "../assets/font-awesome/scss/font-awesome.scss";
+// @import "../assets/font-awesome/scss/font-awesome.scss";
+$fa-font-path: "../../node_modules/font-awesome/fonts/";
+
 @import "../../node_modules/skeleton-css/css/skeleton";
+@import "../../node_modules/font-awesome/scss/font-awesome";
 @import "../../node_modules/ol/ol";
 @import "prism";
 @import "main";
