@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "ol": "^4.2.0",
+    "skeleton-css": "^2.0.4",
     "vue": "^2.4.2"
   }
 }

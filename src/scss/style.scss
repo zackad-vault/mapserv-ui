@@ -1,5 +1,5 @@
-@import "../assets/openlayers/ol.scss";
 @import "../assets/font-awesome/scss/font-awesome.scss";
-@import "../assets/skeleton/scss/skeleton.scss";
-@import "prism.scss";
+@import "../../node_modules/skeleton-css/css/skeleton";
+@import "../../node_modules/ol/ol";
+@import "prism";
 @import "main";
