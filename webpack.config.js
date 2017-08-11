@@ -6,7 +6,7 @@ var extractPlugin = new ExtractTextPlugin({
     filename: 'css/main.css'
 });
 
-module.exports = {
+var config = {
     entry: {
         app: './src/js/index.js'
     },
@@ -86,8 +86,6 @@ module.exports = {
         ]
     },
     plugins: [
-        // cleanup dist folder each build cycle
-        new CleanWebpackPlugin(['dist']),
         // extract text into separate file
         extractPlugin
     ],
@@ -97,3 +95,10 @@ module.exports = {
         }
     }
 };
+
+if (process.env.NODE_ENV === 'production') {
+    // cleanup only when build for production
+    config.plugins.push(new CleanWebpackPlugin(['dist']));
+}
+
+module.exports = config;
