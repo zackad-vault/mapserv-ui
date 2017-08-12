@@ -9,6 +9,10 @@ import Proj from 'ol/proj';
 import Tile from 'ol/layer/tile';
 import OSM from 'ol/source/osm';
 
+/**
+ * VueJS application object instantiation
+ * @type {Vue}
+ */
 var app = new Vue({
     el: '#app',
     data: {
@@ -16,6 +20,10 @@ var app = new Vue({
     }
 });
 
+/**
+ * ol.Map object with OSM as base map
+ * @type {Map}
+ */
 var map = new Map({
     target: 'map_canvas',
     view: new View({
