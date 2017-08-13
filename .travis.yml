@@ -16,5 +16,5 @@ deploy:
   local_dir: dist
   name: DeployBot
   on:
-    all_branches: true
+    tags: true
     node_js: "6"
