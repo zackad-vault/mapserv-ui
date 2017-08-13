@@ -9,12 +9,12 @@ node_js:
 env:
   - CXX=g++-4.8
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
+# addons:
+#   apt:
+#     sources:
+#       - ubuntu-toolchain-r-test
+#     packages:
+#       - g++-4.8
 
 script:
   - npm run build:prod
@@ -22,7 +22,7 @@ script:
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: "$github_token"
+  github_token: $github_token
   local_dir: dist
   on:
     all_branches: true
