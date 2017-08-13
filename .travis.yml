@@ -4,7 +4,6 @@ language: node_js
 
 node_js:
   - "4"
-  - "5"
   - "6"
 
 env:
@@ -23,7 +22,7 @@ script:
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $github_token
+  github_token: "$github_token"
   local_dir: dist
   on:
     all_branches: true
