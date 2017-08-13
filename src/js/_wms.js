@@ -36,6 +36,7 @@ function getWMSCapabilities(url, server) {
 
 function getLayerList(server) {
     loadingStart();
+    log(server);
     var url = server.url;
     var capabilitiesRequestUrl = url + '&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities';
     var xhr = new XMLHttpRequest();

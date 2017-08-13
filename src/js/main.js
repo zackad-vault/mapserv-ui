@@ -9,7 +9,11 @@ var DEBUG = true;
 var app = new Vue({
     el: '#app',
     data: {
-        server: [],
+        server: {
+            layers: [],
+            name: "",
+            url: ""
+        },
         input: {
             name: "",
             url: ""
@@ -23,9 +27,10 @@ var app = new Vue({
         addWMSHost: addWMSHost,
         clearLocalStorage: clearLocalStorage,
         editItem: editItem,
+        exampleHost: exampleHost,
+        getWMSCapabilities: getWMSCapabilities,
         removeItem: removeItem,
-        getCapabilities: getWMSCapabilities,
-        showList: getLayerList,
+        showLayerList: showLayerList,
         showOnMap: showOnMap,
         updateLayer: updateLayer
     }
