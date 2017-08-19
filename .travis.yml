@@ -10,9 +10,9 @@ script:
   - npm run build:prod
 
 before_deploy:
-  - cd dist; zip ../mapserv-ui.${TRAVIS_TAG}.zip *; cd ..
-  - cd dist; tar -cf ../mapserv-ui.${TRAVIS_TAG}.tar.gz *; cd ..
-  - ls -ahs
+  - cd dist; zip ../mapserv-ui.${TRAVIS_TAG}.zip -r *; cd ..
+  - cd dist; tar -zcvf ../mapserv-ui.${TRAVIS_TAG}.tar.gz .; cd ..
+  - ls -hs
 
 deploy:
   - provider: pages
