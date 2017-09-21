@@ -10,8 +10,8 @@ indent_style = tab
 [*.{html,css,js,scss,yml,yaml}]
 indent_style = space
 
-[*.{html,css,scss}]
+[*.{html,css,scss,json}]
 indent_size = 2
 
-[*.{js,json}]
+[*.{js}]
 indent_size = 4
