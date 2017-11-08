@@ -36,7 +36,9 @@ var map = new Map({
     target: 'map_canvas',
     view: new View({
         center: Proj.fromLonLat([107.4, -6.74]),
-        zoom: 2
+        zoom: 2,
+        maxZoom: 22,
+        minZoom: 1
     }),
     layers: [
         new Tile({
