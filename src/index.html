@@ -6,8 +6,26 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  <div class="container">
-    <div id="map_canvas"></div>
+  <div class="container" id="app">
+    <div id="map">
+      <div id="map_canvas"></div>
+      <div class="row status">
+        <div class="three columns">
+          <i class="fa fa-search-plus"></i> Zoom Level: {{ zoomLevel }}
+        </div>
+        <div class="six columns" style="text-align:center;">
+          <span>
+            <i class="fa fa-crosshairs"></i> {{ mapCenter }}
+          </span>
+        </div>
+        <div class="three columns">
+          <span class="u-pull-right">
+            <i class="fa fa-globe"></i> {{ srs }}
+          </span>
+        </div>
+        <span class="u-cf"></span>
+      </div>
+    </div>
   </div>
   <script src="js/app.js"></script>
 </body>

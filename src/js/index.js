@@ -18,7 +18,9 @@ import DefaultControl from 'ol/control';
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Hello'
+        zoomLevel: '',
+        mapCenter: '',
+        srs: ''
     }
 });
 
@@ -35,10 +37,11 @@ var scaleLine = new ScaleLine();
 var map = new Map({
     target: 'map_canvas',
     view: new View({
-        center: Proj.fromLonLat([107.4, -6.74]),
+        center: [107.4, -6.74],
         zoom: 2,
         maxZoom: 22,
-        minZoom: 1
+        minZoom: 1,
+        projection: 'EPSG:4326'
     }),
     layers: [
         new Tile({
@@ -51,3 +54,15 @@ var map = new Map({
         })
     }).extend([scaleLine])
 });
+
+document.addEventListener('DOMContentLoaded', updateStatus);
+map.getView().on(['change'], updateStatus);
+
+/**
+ * update status bar on view change
+ */
+function updateStatus() {
+    app.zoomLevel = map.getView().getZoom();
+    app.mapCenter = map.getView().getCenter().toString();
+    app.srs = map.getView().getProjection().getCode();
+}
