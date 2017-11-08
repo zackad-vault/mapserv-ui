@@ -63,6 +63,8 @@ map.getView().on(['change'], updateStatus);
  */
 function updateStatus() {
     app.zoomLevel = map.getView().getZoom();
-    app.mapCenter = map.getView().getCenter().toString();
+    var center = map.getView().getCenter();
+    center = [center[0].toFixed(6), center[1].toFixed(6)];
+    app.mapCenter = center.toString();
     app.srs = map.getView().getProjection().getCode();
 }
