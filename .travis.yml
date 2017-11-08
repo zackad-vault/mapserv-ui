@@ -20,7 +20,6 @@ deploy:
     name: DeployBot
     on:
       branch: master
-      node_js: "6"
   - provider: releases
     skip_cleanup: true
     name: v${TRAVIS_TAG}
@@ -30,4 +29,3 @@ deploy:
       - mapserv-ui.${TRAVIS_TAG}.zip
     on:
       tags: true
-      node_js: "6"
