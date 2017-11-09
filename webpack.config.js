@@ -99,6 +99,7 @@ var config = {
 if (process.env.NODE_ENV === 'production') {
     // cleanup only when build for production
     config.plugins.push(new CleanWebpackPlugin(['dist']));
+    config.resolve.alias.vue = 'vue/dist/vue.min.js';
 }
 
 module.exports = config;
