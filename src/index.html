@@ -26,6 +26,18 @@
         <span class="u-cf"></span>
       </div>
     </div>
+    <div id="input" class="row">
+      <label for="url">URL</label>
+      <input class="u-full-width" v-model="wms.base_url" placeholder="Enter Mapserver WMS url here ..." id="url" type="text">
+      <button class="u-pull-right inspect-button">Inspect</button>
+    </div>
+    <div id="info">
+      <div id="raw">
+        <pre>
+          <code>{{ wms.rawDataCapability }}</code>
+        </pre>
+      </div>
+    </div>
   </div>
   <script src="js/app.js"></script>
 </body>

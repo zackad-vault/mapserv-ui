@@ -10,6 +10,7 @@ import Tile from 'ol/layer/tile';
 import OSM from 'ol/source/osm';
 import ScaleLine from 'ol/control/scaleline';
 import DefaultControl from 'ol/control';
+import NormalizeUrl from 'normalize-url';
 
 /**
  * VueJS application object instantiation
@@ -20,7 +21,11 @@ var app = new Vue({
     data: {
         zoomLevel: '',
         mapCenter: '',
-        srs: ''
+        srs: '',
+        wms: {
+            base_url: '',
+            rawDataCapability: ''
+        }
     }
 });
 
@@ -56,7 +61,29 @@ var map = new Map({
 });
 
 document.addEventListener('DOMContentLoaded', updateStatus);
+document.querySelectorAll('#input .inspect-button')[0].addEventListener('click', inspectWMS);
 map.getView().on(['change'], updateStatus);
+
+function inspectWMS() {
+    var wms_url = NormalizeUrl(app.wms.base_url + '/&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities');
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = xhrListener;
+    xhr.open('GET', wms_url);
+    xhr.send();
+}
+
+function xhrListener() {
+    console.log(this.statusText);
+    if (this.status !== 200) {
+        app.wms.rawDataCapability = ''
+            + '<==================================================>.\n'
+            + ' An error has occured, please check your url again.\n'
+            + '<==================================================>.\n'
+            + this.getAllResponseHeaders();
+    } else {
+        app.wms.rawDataCapability = this.responseText;
+    }
+}
 
 /**
  * update status bar on view change
