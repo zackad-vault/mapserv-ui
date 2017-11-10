@@ -25,7 +25,8 @@ var app = new Vue({
         srs: '',
         wms: {
             base_url: '',
-            rawDataCapability: ''
+            rawDataCapability: '',
+            status: ''
         }
     }
 });
@@ -57,6 +58,11 @@ var map = new Map({
 
 document.addEventListener('DOMContentLoaded', updateStatus);
 document.querySelectorAll('#input .inspect-button')[0].addEventListener('click', inspectWMS);
+document.querySelectorAll('#input #url')[0].addEventListener('keypress', function(e) {
+    if (e.keyCode === 13) {
+        inspectWMS();
+    }
+});
 map.getView().on(['change'], updateStatus);
 
 function inspectWMS() {
@@ -69,6 +75,7 @@ function inspectWMS() {
 
 function xhrListener() {
     console.log(this.statusText);
+    app.wms.status = this.statusText;
     if (this.status !== 200) {
         app.wms.rawDataCapability = ''
             + Config.error.general
