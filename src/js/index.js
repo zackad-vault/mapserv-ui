@@ -11,6 +11,7 @@ import OSM from 'ol/source/osm';
 import ScaleLine from 'ol/control/scaleline';
 import DefaultControl from 'ol/control';
 import NormalizeUrl from 'normalize-url';
+import Config from './config.js';
 
 /**
  * VueJS application object instantiation
@@ -65,7 +66,7 @@ document.querySelectorAll('#input .inspect-button')[0].addEventListener('click',
 map.getView().on(['change'], updateStatus);
 
 function inspectWMS() {
-    var wms_url = NormalizeUrl(app.wms.base_url + '/&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities');
+    var wms_url = NormalizeUrl(app.wms.base_url + Config.url.query.capability);
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = xhrListener;
     xhr.open('GET', wms_url);
@@ -76,9 +77,7 @@ function xhrListener() {
     console.log(this.statusText);
     if (this.status !== 200) {
         app.wms.rawDataCapability = ''
-            + '<==================================================>.\n'
-            + ' An error has occured, please check your url again.\n'
-            + '<==================================================>.\n'
+            + Config.error.general
             + this.getAllResponseHeaders();
     } else {
         app.wms.rawDataCapability = this.responseText;
