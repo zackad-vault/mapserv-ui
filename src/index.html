@@ -28,13 +28,13 @@
     </div>
     <div id="input" class="row">
       <label for="url">URL</label>
-      <input v-model="wms.base_url" placeholder="Enter Mapserver WMS url here ..." id="url" type="text">
+      <input v-model="wms.baseUrl" placeholder="Enter Mapserver WMS url here ..." id="url" type="text">
       <button class="inspect-button">Inspect</button>
       <label class="status text-center" for="status">{{ wms.status }}</label>
     </div>
     <div id="info">
       <div id="layer">
-        <div class="layer" v-for="layer in layers">
+        <div class="layer" v-for="layer in wms.layers">
           <input type="checkbox" v-bind:value="layer.name">
           <img v-bind:src="layer.legendUrl" v-bind:alt="layer.title">
         </div>

@@ -25,6 +25,7 @@ var app = new Vue({
         srs: '',
         wms: {
             baseUrl: '',
+            layers: [],
             rawDataCapability: '',
             status: ''
         }
@@ -66,10 +67,10 @@ document.querySelectorAll('#input #url')[0].addEventListener('keypress', functio
 map.getView().on(['change'], updateStatus);
 
 function inspectWMS() {
-    var wms_url = NormalizeUrl(app.wms.baseUrl + Config.url.query.capability);
+    var wmsUrl = NormalizeUrl(app.wms.baseUrl + Config.url.query.capability);
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = xhrListener;
-    xhr.open('GET', wms_url);
+    xhr.open('GET', wmsUrl);
     xhr.send();
 }
 
@@ -80,6 +81,19 @@ function xhrListener() {
             + Config.error.general
             + this.getAllResponseHeaders();
     } else {
+        var result = (new DOMParser())
+            .parseFromString(this.responseText, 'application/xml');
+        var layers = result.querySelectorAll('Layer[queryable]');
+        var layerList = [];
+        layers.forEach(function(item, index){
+            layerList.push({
+                name: item.querySelector('Name').innerHTML,
+                title: item.querySelector('Title').innerHTML,
+                legendUrl: item.querySelector('Style LegendURL OnlineResource')
+                    .getAttribute('xlink:href')
+            })
+        });
+        app.wms.layers = layerList;
         app.wms.rawDataCapability = this.responseText;
     }
 }
