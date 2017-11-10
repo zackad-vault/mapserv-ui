@@ -24,7 +24,7 @@ var app = new Vue({
         mapCenter: '',
         srs: '',
         wms: {
-            base_url: '',
+            baseUrl: '',
             rawDataCapability: '',
             status: ''
         }
@@ -66,7 +66,7 @@ document.querySelectorAll('#input #url')[0].addEventListener('keypress', functio
 map.getView().on(['change'], updateStatus);
 
 function inspectWMS() {
-    var wms_url = NormalizeUrl(app.wms.base_url + Config.url.query.capability);
+    var wms_url = NormalizeUrl(app.wms.baseUrl + Config.url.query.capability);
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = xhrListener;
     xhr.open('GET', wms_url);
