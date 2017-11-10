@@ -42,13 +42,7 @@ var scaleLine = new ScaleLine();
  */
 var map = new Map({
     target: 'map_canvas',
-    view: new View({
-        center: [107.4, -6.74],
-        zoom: 2,
-        maxZoom: 22,
-        minZoom: 1,
-        projection: 'EPSG:4326'
-    }),
+    view: new View(Config.view),
     layers: [
         new Tile({
             source: new OSM()
