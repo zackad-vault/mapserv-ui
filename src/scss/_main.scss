@@ -25,6 +25,16 @@ pre code {
   height: 400px;
 }
 
+#url {
+  width: 100%;
+}
+
+#input {
+  label.status {
+    color: lightseagreen;
+  }
+}
+
 .loading {
   display: none;
   text-align: center;
@@ -56,3 +66,16 @@ pre code {
   }
 }
 
+/**
+ * Utility helper class
+ */
+.text-center {
+  text-align: center;
+}
+
+// #input #url
+@media (min-width: 650px) {
+  #url {
+    width: calc(100% - 120px);
+  }
+}

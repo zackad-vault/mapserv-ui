@@ -13,7 +13,7 @@
         <div class="three columns">
           <i class="fa fa-search-plus"></i> Zoom Level: {{ zoomLevel }}
         </div>
-        <div class="six columns" style="text-align:center;">
+        <div class="six columns text-center">
           <span>
             <i class="fa fa-crosshairs"></i> {{ mapCenter }}
           </span>
@@ -28,8 +28,9 @@
     </div>
     <div id="input" class="row">
       <label for="url">URL</label>
-      <input class="u-full-width" v-model="wms.base_url" placeholder="Enter Mapserver WMS url here ..." id="url" type="text">
-      <button class="u-pull-right inspect-button">Inspect</button>
+      <input v-model="wms.base_url" placeholder="Enter Mapserver WMS url here ..." id="url" type="text">
+      <button class="inspect-button">Inspect</button>
+      <label class="status text-center" for="status">{{ wms.status }}</label>
     </div>
     <div id="info">
       <div id="raw">
