@@ -74,7 +74,6 @@ function inspectWMS() {
 }
 
 function xhrListener() {
-    console.log(this.statusText);
     app.wms.status = this.statusText;
     if (this.status !== 200) {
         app.wms.rawDataCapability = ''
