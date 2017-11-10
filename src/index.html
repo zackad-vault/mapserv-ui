@@ -33,6 +33,12 @@
       <label class="status text-center" for="status">{{ wms.status }}</label>
     </div>
     <div id="info">
+      <div id="layer">
+        <div class="layer" v-for="layer in layers">
+          <input type="checkbox" v-bind:value="layer.name">
+          <img v-bind:src="layer.legendUrl" v-bind:alt="layer.title">
+        </div>
+      </div>
       <div id="raw">
         <pre>
           <code>{{ wms.rawDataCapability }}</code>
