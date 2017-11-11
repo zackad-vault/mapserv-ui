@@ -35,7 +35,7 @@
     <div id="info">
       <div id="layer">
         <div class="layer" v-for="layer in wms.layers">
-          <input type="checkbox" v-bind:value="layer.name">
+          <input type="checkbox" v-bind:value="layer.name" checked>
           <img v-bind:src="layer.legendUrl" v-bind:alt="layer.title">
         </div>
       </div>

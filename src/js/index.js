@@ -6,6 +6,7 @@ import Vue from 'vue';
 import Map from 'ol/map';
 import View from 'ol/view';
 import Proj from 'ol/proj';
+import Extent from 'ol/extent';
 import Tile from 'ol/layer/tile';
 import OSM from 'ol/source/osm';
 import TileWMS from 'ol/source/tilewms';
@@ -89,6 +90,25 @@ document.querySelectorAll('#input #url')[0].addEventListener('keypress', functio
 });
 map.getView().on(['change'], updateStatus);
 
+function extractLayerInfo(element) {
+    var el = element;
+    // Bounding box
+    var bb = el.querySelectorAll('EX_GeographicBoundingBox > *');
+    var boundingBox = [
+        parseFloat(bb[0].textContent),
+        parseFloat(bb[2].textContent),
+        parseFloat(bb[1].textContent),
+        parseFloat(bb[3].textContent)
+    ];
+    return {
+        name: el.querySelector('Name').innerHTML,
+        title: el.querySelector('Title').innerHTML,
+        legendUrl: el.querySelector('Style LegendURL OnlineResource')
+            .getAttribute('xlink:href'),
+        boundingBox: boundingBox
+    }
+}
+
 function inspectWMS() {
     resetWMS();
     var wmsUrl = NormalizeUrl(app.wms.baseUrl + Config.url.query.capability);
@@ -117,15 +137,13 @@ function xhrListener() {
         var layers = result.querySelectorAll('Layer[queryable]');
         var layerList = [];
         var layerNames = [];
+        var extent = new Extent.createEmpty();
         layers.forEach(function(item, index){
-            layerList.push({
-                name: item.querySelector('Name').innerHTML,
-                title: item.querySelector('Title').innerHTML,
-                legendUrl: item.querySelector('Style LegendURL OnlineResource')
-                    .getAttribute('xlink:href')
-            })
+            layerList.push(extractLayerInfo(item));
             layerNames.push(item.querySelector('Name').innerHTML);
+            Extent.extend(extent, extractLayerInfo(item).boundingBox);
         });
+        map.getView().fit(extent, map.getSize());
         wmsSource.updateParams({LAYERS: layerNames});
         app.wms.layers = layerList;
         app.wms.rawDataCapability = this.responseText;
