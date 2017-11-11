@@ -144,6 +144,7 @@ function xhrListener() {
             Extent.extend(extent, extractLayerInfo(item).boundingBox);
         });
         map.getView().fit(extent, map.getSize());
+        updateStatus();
         wmsSource.updateParams({LAYERS: layerNames});
         app.wms.layers = layerList;
         app.wms.rawDataCapability = this.responseText;
