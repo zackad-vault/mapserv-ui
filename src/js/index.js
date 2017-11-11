@@ -8,6 +8,7 @@ import View from 'ol/view';
 import Proj from 'ol/proj';
 import Tile from 'ol/layer/tile';
 import OSM from 'ol/source/osm';
+import TileWMS from 'ol/source/tilewms';
 import ScaleLine from 'ol/control/scaleline';
 import DefaultControl from 'ol/control';
 import NormalizeUrl from 'normalize-url';
@@ -57,6 +58,28 @@ var map = new Map({
     }).extend([scaleLine])
 });
 
+var wmsSource = new TileWMS({
+    url: '',
+    serverType: 'mapserver',
+    params: {
+        LAYERS: '',
+        TRANSPARENT: true
+    }
+});
+
+/**
+ * wmsLayer object instantiaton with TileWMS
+ * @type {Tile}
+ */
+var wmsLayer = new Tile();
+
+wmsLayer.setSource(wmsSource);
+
+map.addLayer(wmsLayer);
+
+/**
+ * Event listener
+ */
 document.addEventListener('DOMContentLoaded', updateStatus);
 document.querySelectorAll('#input .inspect-button')[0].addEventListener('click', inspectWMS);
 document.querySelectorAll('#input #url')[0].addEventListener('keypress', function(e) {
@@ -68,6 +91,7 @@ map.getView().on(['change'], updateStatus);
 
 function inspectWMS() {
     var wmsUrl = NormalizeUrl(app.wms.baseUrl + Config.url.query.capability);
+    wmsSource.setUrl(wmsUrl);
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = xhrListener;
     xhr.open('GET', wmsUrl);
@@ -85,6 +109,7 @@ function xhrListener() {
             .parseFromString(this.responseText, 'application/xml');
         var layers = result.querySelectorAll('Layer[queryable]');
         var layerList = [];
+        var layerNames = [];
         layers.forEach(function(item, index){
             layerList.push({
                 name: item.querySelector('Name').innerHTML,
@@ -92,7 +117,9 @@ function xhrListener() {
                 legendUrl: item.querySelector('Style LegendURL OnlineResource')
                     .getAttribute('xlink:href')
             })
+            layerNames.push(item.querySelector('Name').innerHTML);
         });
+        wmsSource.updateParams({LAYERS: layerNames});
         app.wms.layers = layerList;
         app.wms.rawDataCapability = this.responseText;
     }
