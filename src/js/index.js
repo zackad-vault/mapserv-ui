@@ -90,12 +90,19 @@ document.querySelectorAll('#input #url')[0].addEventListener('keypress', functio
 map.getView().on(['change'], updateStatus);
 
 function inspectWMS() {
+    resetWMS();
     var wmsUrl = NormalizeUrl(app.wms.baseUrl + Config.url.query.capability);
     wmsSource.setUrl(wmsUrl);
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = xhrListener;
     xhr.open('GET', wmsUrl);
     xhr.send();
+}
+
+function resetWMS() {
+    app.wms.rawDataCapability = '';
+    app.wms.layers = [];
+    app.wms.status = '';
 }
 
 function xhrListener() {
