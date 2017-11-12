@@ -31,6 +31,9 @@ var app = new Vue({
             rawDataCapability: '',
             status: ''
         }
+    },
+    methods: {
+        updateWMSParams: updateWMSParams
     }
 });
 
@@ -160,4 +163,13 @@ function updateStatus() {
     center = [center[0].toFixed(6), center[1].toFixed(6)];
     app.mapCenter = center.toString();
     app.srs = map.getView().getProjection().getCode();
+}
+
+function updateWMSParams() {
+    var checkbox = document.querySelectorAll('#info input:checked');
+    var layersName = [];
+    checkbox.forEach(function(item, index) {
+        layersName.push(item.value);
+    });
+    wmsSource.updateParams({LAYERS: layersName});
 }
