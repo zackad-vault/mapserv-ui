@@ -39,6 +39,14 @@ var app = new Vue({
 });
 
 /**
+ * OSL layer tile
+ * @type {Tile}
+ */
+var osmLayer = new Tile({
+    source: new OSM()
+});
+
+/**
  * Add scale bar into map
  * @type {ScaleLine}
  */
@@ -51,11 +59,7 @@ var scaleLine = new ScaleLine();
 var map = new Map({
     target: 'map_canvas',
     view: new View(Config.view),
-    layers: [
-        new Tile({
-            source: new OSM()
-        })
-    ],
+    layers: [osmLayer],
     controls: DefaultControl.defaults({
         attributionOptions: ({
             collapsible: false
@@ -158,6 +162,7 @@ function xhrListener() {
 
 function toggleTransparentBackground() {
     var tgValue = document.querySelector('input[name="transparent"]').checked;
+    osmLayer.setVisible(tgValue);
     wmsSource.updateParams({
         TRANSPARENT: tgValue
     });
