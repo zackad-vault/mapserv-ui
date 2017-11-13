@@ -30,8 +30,10 @@
       <label for="url">URL</label>
       <input v-model="wms.baseUrl" placeholder="Enter Mapserver WMS url here ..." id="url" type="text">
       <button class="inspect-button">Inspect</button>
+      <input type="checkbox" checked name="transparent" v-on:click="toggleTransparentBackground"> Enable Transparent Background
       <label class="status text-center" for="status">{{ wms.status }}</label>
     </div>
+    <hr>
     <div id="info">
       <div id="layer">
         <div class="layer" v-for="layer in wms.layers">

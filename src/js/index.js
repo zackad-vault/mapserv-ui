@@ -33,6 +33,7 @@ var app = new Vue({
         }
     },
     methods: {
+        toggleTransparentBackground: toggleTransparentBackground,
         updateWMSParams: updateWMSParams
     }
 });
@@ -149,9 +150,17 @@ function xhrListener() {
         map.getView().fit(extent, map.getSize());
         updateStatus();
         wmsSource.updateParams({LAYERS: layerNames});
+        toggleTransparentBackground();
         app.wms.layers = layerList;
         app.wms.rawDataCapability = this.responseText;
     }
+}
+
+function toggleTransparentBackground() {
+    var tgValue = document.querySelector('input[name="transparent"]').checked;
+    wmsSource.updateParams({
+        TRANSPARENT: tgValue
+    });
 }
 
 /**
