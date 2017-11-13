@@ -39,7 +39,7 @@ var app = new Vue({
 });
 
 /**
- * OSL layer tile
+ * OSM layer tile
  * @type {Tile}
  */
 var osmLayer = new Tile({
@@ -51,6 +51,25 @@ var osmLayer = new Tile({
  * @type {ScaleLine}
  */
 var scaleLine = new ScaleLine();
+
+/**
+ * Main WMS layer source to inspect
+ * @type {TileWMS}
+ */
+var wmsSource = new TileWMS({
+    url: '',
+    serverType: 'mapserver',
+    params: {
+        LAYERS: '',
+        TRANSPARENT: true
+    }
+});
+
+/**
+ * wmsLayer object instantiaton with TileWMS
+ * @type {Tile}
+ */
+var wmsLayer = new Tile();
 
 /**
  * ol.Map object with OSM as base map
@@ -67,23 +86,8 @@ var map = new Map({
     }).extend([scaleLine])
 });
 
-var wmsSource = new TileWMS({
-    url: '',
-    serverType: 'mapserver',
-    params: {
-        LAYERS: '',
-        TRANSPARENT: true
-    }
-});
-
-/**
- * wmsLayer object instantiaton with TileWMS
- * @type {Tile}
- */
-var wmsLayer = new Tile();
-
+// set source to wms layer and add it to map object
 wmsLayer.setSource(wmsSource);
-
 map.addLayer(wmsLayer);
 
 /**
@@ -98,6 +102,11 @@ document.querySelectorAll('#input #url')[0].addEventListener('keypress', functio
 });
 map.getView().on(['change'], updateStatus);
 
+/**
+ * Extract information from xml DOM
+ * @param  {DOM}    element     single node of layer DOM
+ * @return {object}             object with extracted attribute from DOM
+ */
 function extractLayerInfo(element) {
     var el = element;
     // Bounding box
@@ -117,6 +126,10 @@ function extractLayerInfo(element) {
     }
 }
 
+/**
+ * Send XMLHttpRequest to get wms capability data
+ * @return {void}   return nothing
+ */
 function inspectWMS() {
     resetWMS();
     var wmsUrl = NormalizeUrl(app.wms.baseUrl + Config.url.query.capability);
@@ -127,12 +140,58 @@ function inspectWMS() {
     xhr.send();
 }
 
+/**
+ * Reset vue app data when new request data is send with XMLHttpRequest
+ * @return {void}   return nothing
+ */
 function resetWMS() {
     app.wms.rawDataCapability = '';
     app.wms.layers = [];
     app.wms.status = '';
 }
 
+/**
+ * Toggle transparent background of wms layer
+ * @return {void}   return nothing
+ */
+function toggleTransparentBackground() {
+    var tgValue = document.querySelector('input[name="transparent"]').checked;
+    osmLayer.setVisible(tgValue);
+    wmsSource.updateParams({
+        TRANSPARENT: tgValue
+    });
+}
+
+/**
+ * Update status bar on view change
+ * @return {void}   return nothing
+ */
+function updateStatus() {
+    var center = map.getView().getCenter();
+    center = [center[0].toFixed(6), center[1].toFixed(6)];
+    app.mapCenter = center.toString();
+    app.zoomLevel = map.getView().getZoom();
+    app.srs = map.getView().getProjection().getCode();
+}
+
+/**
+ * Update which wms layer name to render into the map
+ * @return {void}   return nothing
+ */
+function updateWMSParams() {
+    var checkbox = document.querySelectorAll('#info input:checked');
+    var layersName = [];
+    checkbox.forEach(function(item, index) {
+        layersName.push(item.value);
+    });
+    wmsSource.updateParams({LAYERS: layersName});
+}
+
+/**
+ * Listener of XMLHttpRequest send by inspectWMS function
+ * save response data into vue app data, render map, show status request etc.
+ * @return {void}   return nothing
+ */
 function xhrListener() {
     app.wms.status = this.statusText;
     if (this.status !== 200) {
@@ -158,32 +217,4 @@ function xhrListener() {
         app.wms.layers = layerList;
         app.wms.rawDataCapability = this.responseText;
     }
-}
-
-function toggleTransparentBackground() {
-    var tgValue = document.querySelector('input[name="transparent"]').checked;
-    osmLayer.setVisible(tgValue);
-    wmsSource.updateParams({
-        TRANSPARENT: tgValue
-    });
-}
-
-/**
- * update status bar on view change
- */
-function updateStatus() {
-    app.zoomLevel = map.getView().getZoom();
-    var center = map.getView().getCenter();
-    center = [center[0].toFixed(6), center[1].toFixed(6)];
-    app.mapCenter = center.toString();
-    app.srs = map.getView().getProjection().getCode();
-}
-
-function updateWMSParams() {
-    var checkbox = document.querySelectorAll('#info input:checked');
-    var layersName = [];
-    checkbox.forEach(function(item, index) {
-        layersName.push(item.value);
-    });
-    wmsSource.updateParams({LAYERS: layersName});
 }
