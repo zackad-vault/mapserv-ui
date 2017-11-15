@@ -6,6 +6,7 @@ node_js: 6
 
 script:
   - npm run build:prod
+  - npm run test
 
 before_deploy:
   - cd dist; zip ../mapserv-ui.${TRAVIS_TAG}.zip -r *; cd ..
