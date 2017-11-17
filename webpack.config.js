@@ -9,7 +9,10 @@ var extractPlugin = new ExtractTextPlugin({
 });
 
 var purifyCSS = new PurifyCSSPlugin({
-    paths: glob.sync(path.join(__dirname, 'dist/*.html'))
+    paths: glob.sync(path.join(__dirname, 'dist/*.html')),
+    purifyOptions: {
+        minify: true
+    }
 });
 
 var config = {
@@ -93,8 +96,7 @@ var config = {
     },
     plugins: [
         // extract text into separate file
-        extractPlugin,
-        purifyCSS
+        extractPlugin
     ],
     resolve: {
         alias: {
@@ -106,6 +108,7 @@ var config = {
 if (process.env.NODE_ENV === 'production') {
     // cleanup only when build for production
     config.plugins.push(new CleanWebpackPlugin(['dist']));
+    config.plugins.push(purifyCSS);
     config.resolve.alias.vue = 'vue/dist/vue.min.js';
 }
 
