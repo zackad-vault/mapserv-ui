@@ -1,9 +1,15 @@
 var path = require('path');
+var glob = require('glob');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var PurifyCSSPlugin = require('purifycss-webpack');
 
 var extractPlugin = new ExtractTextPlugin({
     filename: 'css/main.css'
+});
+
+var purifyCSS = new PurifyCSSPlugin({
+    paths: glob.sync(path.join(__dirname, 'dist/*.html'))
 });
 
 var config = {
@@ -87,7 +93,8 @@ var config = {
     },
     plugins: [
         // extract text into separate file
-        extractPlugin
+        extractPlugin,
+        purifyCSS
     ],
     resolve: {
         alias: {
