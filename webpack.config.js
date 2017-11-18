@@ -1,9 +1,18 @@
 var path = require('path');
+var glob = require('glob');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var PurifyCSSPlugin = require('purifycss-webpack');
 
 var extractPlugin = new ExtractTextPlugin({
     filename: 'css/main.css'
+});
+
+var purifyCSS = new PurifyCSSPlugin({
+    paths: glob.sync(path.join(__dirname, 'dist/*.html')),
+    purifyOptions: {
+        minify: true
+    }
 });
 
 var config = {
@@ -99,6 +108,7 @@ var config = {
 if (process.env.NODE_ENV === 'production') {
     // cleanup only when build for production
     config.plugins.push(new CleanWebpackPlugin(['dist']));
+    config.plugins.push(purifyCSS);
     config.resolve.alias.vue = 'vue/dist/vue.min.js';
 }
 
