@@ -7,6 +7,7 @@ import Map from 'ol/map';
 import View from 'ol/view';
 import Proj from 'ol/proj';
 import Extent from 'ol/extent';
+import Graticule from 'ol/graticule';
 import Tile from 'ol/layer/tile';
 import OSM from 'ol/source/osm';
 import TileWMS from 'ol/source/tilewms';
@@ -72,6 +73,16 @@ var wmsSource = new TileWMS({
 var wmsLayer = new Tile();
 
 /**
+ * graticule object instantiation
+ * @type {Graticule}
+ */
+var graticule = new Graticule({
+    maxLines: 50,
+    showLabels: true,
+    targetSize: 175
+});
+
+/**
  * ol.Map object with OSM as base map
  * @type {Map}
  */
@@ -89,6 +100,9 @@ var map = new Map({
 // set source to wms layer and add it to map object
 wmsLayer.setSource(wmsSource);
 map.addLayer(wmsLayer);
+
+// add graticule object into map
+graticule.setMap(map);
 
 /**
  * Event listener
