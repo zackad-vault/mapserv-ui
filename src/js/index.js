@@ -34,6 +34,7 @@ var app = new Vue({
         }
     },
     methods: {
+        toggleGraticule: toggleGraticule,
         toggleTransparentBackground: toggleTransparentBackground,
         updateWMSParams: updateWMSParams
     }
@@ -162,6 +163,15 @@ function resetWMS() {
     app.wms.rawDataCapability = '';
     app.wms.layers = [];
     app.wms.status = '';
+}
+
+/**
+ * Toggle graticule visibility on map
+ * @return {voin}   return nothing
+ */
+function toggleGraticule() {
+    var tgValue = document.querySelector('input[name="graticule"]').checked;
+    (tgValue) ? graticule.setMap(map) : graticule.setMap(null);
 }
 
 /**
