@@ -5,8 +5,9 @@
   "main": "src/js/index.js",
   "scripts": {
     "test": "bundlesize",
+    "purify-css": "purifycss dist/css/main.css dist/index.html dist/js/app.js -m -o dist/css/main.css",
     "build": "webpack-dev-server",
-    "build:prod": "NODE_ENV=production webpack -p"
+    "build:prod": "NODE_ENV=production webpack -p && npm run purify-css"
   },
   "bundlesize": [
     {
