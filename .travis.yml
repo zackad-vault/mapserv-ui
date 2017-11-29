@@ -11,7 +11,6 @@ before_script:
   - git clone --depth=5 -b nightly-build "https://$GITHUB_TOKEN@github.com/zackad/mapserv-ui" dist
 
 script:
-  - npm run build:prod
   - npm run test
 
 before_deploy:
