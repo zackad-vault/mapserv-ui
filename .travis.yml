@@ -42,3 +42,5 @@ deploy:
         && if ! [ "$(git status --porcelain)" ]; then exit 0; fi
         && git commit -m "Publishing revision $(git --git-dir ../.git describe)"
         && git push origin nightly-build
+    on:
+      all_branches: true
