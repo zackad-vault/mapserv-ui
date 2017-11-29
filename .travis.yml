@@ -8,9 +8,9 @@ before_script:
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "TravisCI"
   - git config --global push.default "matching"
-  - git clone --depth=5 -b nightly-build "https://$GITHUB_TOKEN@github.com/zackad/mapserv-ui" dist
 
 script:
+  - git clone --depth=5 -b nightly-build "https://$GITHUB_TOKEN@github.com/zackad/mapserv-ui" dist
   - npm run test
 
 before_deploy:
