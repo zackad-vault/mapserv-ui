@@ -16,6 +16,7 @@ deploy:
     skip_cleanup: true
     local_dir: dist
     name: DeployBot
+    github_token: $GITHUB_TOKEN
     on:
       branch: master
   - provider: releases
