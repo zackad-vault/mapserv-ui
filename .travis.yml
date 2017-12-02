@@ -4,7 +4,13 @@ language: node_js
 
 node_js: 6
 
+before_script:
+  - git config --global user.email "travis@travis-ci.org"
+  - git config --global user.name "TravisCI"
+  - git config --global push.default "matching"
+
 script:
+  - git clone --depth=5 -b nightly-build "https://$GITHUB_TOKEN@github.com/zackad/mapserv-ui" dist
   - npm run test
 
 before_deploy:
@@ -28,3 +34,13 @@ deploy:
       - mapserv-ui.${TRAVIS_TAG}.zip
     on:
       tags: true
+  - provider: script
+    skip_cleanup: true
+    script:
+      - cd dist
+        && git add --all .
+        && if [ "$(git status --porcelain)" ]; then exit 0; fi
+        && git commit -m "Publishing revision $(git --git-dir ../.git rev-parse --short HEAD)"
+        && git push origin nightly-build
+    on:
+      all_branches: true
