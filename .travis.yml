@@ -15,7 +15,7 @@ script:
 
 before_deploy:
   - cd dist; zip ../mapserv-ui.${TRAVIS_TAG}.zip -r *; cd ..
-  - ls -hs
+  - ls -hsa
 
 deploy:
   - provider: pages
