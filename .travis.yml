@@ -12,6 +12,7 @@ before_script:
 script:
   - git clone --depth=5 -b nightly-build "https://$GITHUB_TOKEN@github.com/zackad/mapserv-ui" dist
   - npm run test
+  - pwd
 
 before_deploy:
   - cd dist; zip ../mapserv-ui.${TRAVIS_TAG}.zip -r *; cd ..
@@ -37,7 +38,9 @@ deploy:
   - provider: script
     skip_cleanup: true
     script:
-      - cd dist
+      - pwd
+        && ls -hsa
+        && cd dist
         && git add --all .
         && if [ "$(git status --porcelain)" ]; then exit 0; fi
         && git commit -m "Publishing revision $(git --git-dir ../.git rev-parse --short HEAD)"
