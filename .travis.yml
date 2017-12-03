@@ -4,28 +4,43 @@ language: node_js
 
 node_js: 6
 
+before_script:
+  - git config --global user.email "travis@travis-ci.org"
+  - git config --global user.name "TravisCI"
+  - git config --global push.default "matching"
+
 script:
+  - git clone --depth=5 -b nightly-build "https://$GITHUB_TOKEN@github.com/zackad/mapserv-ui" dist
   - npm run test
 
 before_deploy:
   - cd dist; zip ../mapserv-ui.${TRAVIS_TAG}.zip -r *; cd ..
-  - ls -hs
+  - ls -hsa
 
 deploy:
   - provider: pages
     skip_cleanup: true
-    github_token:
-      secure: rv3AhPBCR9th2EmqzwZV6aXq6NEJehYVcyNnGqTRHnzc7dSkXK5CFGPwFsoNImT4ojkCavFT2g+Mr/TwOBCSMTynq8mdZNj/45izPZ2kKd8wn8QsgpUnU1OYdQDSBV6NBWY4Hbj5Bi1G857EFtx67gxHnZTidglCsZ2MT1VCssp+vGl6Up23cC1M2U6GIwaMeU9xUlcNHOJXeI+jNDWHkQ37kLLyiRPOlYfstHHKXsvniyPuwNdr7g37KMAICJ4ULCp5i1QQTYEA20dZcZgJfdhxD5sOgnPcbJCJyXmJV/9inCWinTI2r9owzexAMIvEfv6iHpVlAoqKfnofB0QJAM2+BvI4Fawaz40UaHvk/YxtGG6nYfSuv8FFBcNts372yCrVi9Hr3YWjl/kRzx3umN6fOiQ3Sto/PQzniFTyuY4JIKOFYfHlh/b9WhLfeXb38mtXbfL4Z4jquEuXhdKEHxf77DPGH2pJi/uEcCxTj2zPow1QTbSVDEwQHWMzWH++Zhbp0Wh89jgXQC6l44grOLWhZGiS21tHLz/NE41hHaV5pNN5p60+OSl4e5mmb51ZjHOyUh5AaYqYWPskCz3UprDzs3NxJgIGkqJswuzA6nO+Ui13AkY93IYwppgmlphcJlIYhenGEqfxe913FxbC5ukivDWtrSAtOIWCe/nAhy0=
     local_dir: dist
     name: DeployBot
+    github_token: $GITHUB_TOKEN
     on:
       branch: master
   - provider: releases
     skip_cleanup: true
-    name: v${TRAVIS_TAG}
+    name: Mapserver-UI.v${TRAVIS_TAG}
     api_key:
       secure: F25RSXqrux4KojLJGnLjLbbU6so3IzkvTHbf/gPyvuJKzvqpGk9TB4yXUxSUw0cPCLP5vrEfN0AoE6RFuq/78NfqoFea8V7FaS7cq6nnFhzTB+mQXaCcS7m3ja42dTFvez+LD2DIZv2ef/uAHR5igmLI65l0dhVHBHH9j4f3wDHd9XGkzAhoxcV7RG3irOfpuqUSAGrxHFZTLerKgH2HPLw3Qr80HirHfxby76SY4AUfm50xu1ZoXdMcRaunCpSZe2Bb+Glo4SzhS+0LT2+aPs+R6fSswv9/K6hzslzvS8mCaQL8DvDPt4N9axLwjTTZwrMcIjPFPzgZ01gPPh7MCBjEG5kfgxKJV+UvmXPjGhyWgsa5V/DMGf6vQs3Hsd/bFmfTFfGZWdiZnh2MNr1E0We28fZ7080ab2IFF6j3D+cXF4zk+oaeKN4VO7ISzKP2xidWpObj9Qx7NcWAQoIybBDqmnxslQdTJyilmElOolX4uTWy2i4ai+aLFy0wMLyoBWvhy/Ziq8PCO14WjB2n8M3Wfehu8xz39sj4VhxeV+GioDI19UG4tH3n+IVIAJBkSdCAtwjBy0jfygM50CEtKQZGLL0id1F0hDg7CvnAt8HnBiJe2kYIUCwPeBr9MRkCnrQhasgu5P6Js2hYiCfJP6oM56xhjT8R64MRqXmnKek=
     file:
       - mapserv-ui.${TRAVIS_TAG}.zip
     on:
       tags: true
+  - provider: script
+    skip_cleanup: true
+    script:
+      - cd dist
+        && git add --all .
+        && if [ "$(git status --porcelain)" ]; then exit 0; fi
+        && git commit -m "Publishing revision $(git --git-dir ../.git rev-parse --short HEAD)"
+        && git push origin nightly-build
+    on:
+      all_branches: true
