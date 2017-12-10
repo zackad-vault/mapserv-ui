@@ -30,16 +30,22 @@
       <label for="url">URL</label>
       <input v-model="wms.baseUrl" placeholder="Enter Mapserver WMS url here ..." id="url" type="text">
       <button class="inspect-button">Inspect</button>
-      <input type="checkbox" checked name="transparent" v-on:click="toggleTransparentBackground"> Enable Transparent Background
-      <input type="checkbox" checked name="graticule" v-on:click="toggleGraticule"> Show Graticule
+      <label>
+        <input type="checkbox" checked name="transparent" v-on:click="toggleTransparentBackground"> Enable Transparent Background
+      </label>
+      <label>
+        <input type="checkbox" checked name="graticule" v-on:click="toggleGraticule"> Show Graticule
+      </label>
       <label class="status text-center" for="status">{{ wms.status }}</label>
     </div>
     <hr>
     <div id="info">
       <div id="layer">
         <div class="layer" v-for="layer in wms.layers">
-          <input type="checkbox" v-bind:value="layer.name" v-on:click="updateWMSParams" checked>
-          <img v-bind:src="layer.legendUrl" v-bind:alt="layer.title">
+          <label>
+            <input type="checkbox" v-bind:value="layer.name" v-on:click="updateWMSParams" checked>
+            <img v-bind:src="layer.legendUrl" v-bind:alt="layer.title">
+          </label>
         </div>
       </div>
       <div id="raw">
