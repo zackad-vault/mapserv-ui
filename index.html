@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mapserver UI</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="container" id="app">
+    <div id="map">
+      <div id="map_canvas"></div>
+      <div class="row status">
+        <div class="three columns">
+          <i class="fa fa-search-plus"></i> Zoom Level: {{ zoomLevel }}
+        </div>
+        <div class="six columns text-center">
+          <span>
+            <i class="fa fa-crosshairs"></i> {{ mapCenter }}
+          </span>
+        </div>
+        <div class="three columns">
+          <span class="u-pull-right">
+            <i class="fa fa-globe"></i> {{ srs }}
+          </span>
+        </div>
+        <span class="u-cf"></span>
+      </div>
+    </div>
+    <div id="input" class="row">
+      <label for="url">URL</label>
+      <input v-model="wms.baseUrl" placeholder="Enter Mapserver WMS url here ..." id="url" type="text">
+      <button class="inspect-button">Inspect</button>
+      <label>
+        <input type="checkbox" checked name="transparent" v-on:click="toggleTransparentBackground"> Enable Transparent Background
+      </label>
+      <label>
+        <input type="checkbox" checked name="graticule" v-on:click="toggleGraticule"> Show Graticule
+      </label>
+      <label class="status text-center" for="status">{{ wms.status }}</label>
+    </div>
+    <hr>
+    <div id="info">
+      <div id="layer">
+        <div class="layer" v-for="layer in wms.layers">
+          <label>
+            <input type="checkbox" v-bind:value="layer.name" v-on:click="updateWMSParams" checked>
+            <img v-bind:src="layer.legendUrl" v-bind:alt="layer.title">
+          </label>
+        </div>
+      </div>
+      <div id="raw">
+        <pre>
+          <code>{{ wms.rawDataCapability }}</code>
+        </pre>
+      </div>
+    </div>
+  </div>
+  <a href="https://github.com/zackad/mapserv-ui"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+  <script src="js/app.js"></script>
+</body>
+</html>
